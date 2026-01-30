@@ -1,0 +1,5 @@
+# 核心依赖
+frida>=17.5.2
+mcp>=1.26.0
+starlette>=0.52.1
+uvicorn>=0.40.0
