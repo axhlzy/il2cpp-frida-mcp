@@ -3,6 +3,9 @@
  * 提供 RPC 接口供 MCP Server 调用
  */
 
+import "frida-java-bridge"
+import "frida-il2cpp-bridge"
+
 import { ImageService } from "./services/image-service"
 import { ClassService } from "./services/class-service"
 import { MethodService } from "./services/method-service"

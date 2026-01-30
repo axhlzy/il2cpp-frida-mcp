@@ -1,10 +1,8 @@
-/**
- * 执行服务 - 处理任意 JavaScript 代码执行
- */
+import Java from "frida-java-bridge";
+
+(globalThis as any).Java = Java;
+
 export class ExecService {
-    /**
-     * 执行任意 JavaScript 代码
-     */
     static execJs(code: string): any {
         try {
             const result = eval(code);

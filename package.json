@@ -1,5 +1,5 @@
 {
-  "name": "Il2CppHookScripts-mcp-agent",
+  "name": "il2cpp-frida-mcp",
   "version": "1.0.0",
   "description": "Frida agent written in TypeScript",
   "private": true,
@@ -7,14 +7,15 @@
   "type": "module",
   "scripts": {
     "prepare": "npm run build",
-    "build": "frida-compile agent/index.ts -o _agent.js -c",
+    "build": "frida-compile agent/index.ts -o _agent.js -c && node -e \"require('fs').copyFileSync('_agent.js', 'mcp_server/_agent.js')\"",
     "watch": "frida-compile agent/index.ts -o _agent.js -w"
   },
   "devDependencies": {
-    "@types/frida-gum": "^19.0.0",
+    "@types/frida-gum": "^19.0.1",
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "frida-il2cpp-bridge": "^0.12.2"
+    "frida-il2cpp-bridge": "^0.12.2",
+    "frida-java-bridge": "7.0.10"
   }
 }

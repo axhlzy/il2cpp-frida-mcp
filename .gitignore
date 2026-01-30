@@ -1,3 +1,6 @@
 node_modules
 mcp_config.json
 package-lock.json
+il2cpp_frida_mcp.egg-info
+mcp_server/_agent.js
+scripts

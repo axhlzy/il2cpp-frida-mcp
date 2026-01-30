@@ -36,7 +36,7 @@ dev = [
 ]
 
 [project.scripts]
-il2cpp-mcp = "mcp_server.__main__:main"
+il2cpp-frida-mcp = "mcp_server.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/axhlzy/il2cpp-frida-mcp"

@@ -10,18 +10,18 @@ def get_tools() -> list[Tool]:
         # Frida 基础工具
         Tool(
             name="frida_list_devices",
-            description="列出所有可用的 Frida 设备",
+            description="列出所有可用的 Frida 设备（一般不需要调用，除非用户明确要求查看设备列表）",
             inputSchema={"type": "object", "properties": {}}
         ),
         Tool(
             name="frida_connect",
-            description="连接到 Frida 设备和目标进程",
+            description="连接到 Frida 设备和目标进程。未连接时默认使用 device_type='usb' 和 mode='attach_front' 连接前台应用",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "device_type": {"type": "string", "enum": ["usb", "remote", "local"]},
+                    "device_type": {"type": "string", "enum": ["usb", "remote", "local"], "default": "usb"},
                     "remote_host": {"type": "string"},
-                    "mode": {"type": "string", "enum": ["spawn", "attach_front", "attach_name", "attach_pid"]},
+                    "mode": {"type": "string", "enum": ["spawn", "attach_front", "attach_name", "attach_pid"], "default": "attach_front"},
                     "target": {"type": "string"}
                 },
                 "required": ["device_type", "mode"]
@@ -79,11 +79,11 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_show_method",
-            description="显示方法的详细信息。注意:method_ptr 必须是 Il2CppMethod 指针(即 il2cpp_list_methods 返回结果的第一列 handle 地址),而不是 virtual_address 或 relative_virtual_address",
+            description="显示方法的详细信息。注意: 参数必须是 Il2CppMethod 指针 (即 il2cpp_list_methods 返回结果的第二列地址)",
             inputSchema={
                 "type": "object",
-                "properties": {"method_ptr": {"type": "string", "description": "Il2CppMethod 指针地址(list_methods 返回的第一列 handle)"}},
-                "required": ["method_ptr"]
+                "properties": {"il2cpp_method_ptr": {"type": "string", "description": "Il2CppMethod 指针地址(il2cpp_list_methods 返回结果的第一列 handle)"}},
+                "required": ["il2cpp_method_ptr"]
             }
         ),
         Tool(
@@ -117,11 +117,11 @@ def get_tools() -> list[Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "method_ptr": {"type": "string", "description": "方法的 virtual_address(list_methods 返回的第二列地址)"},
+                    "il2cpp_method_ptr": {"type": "string", "description": "方法的 virtual_address(list_methods 返回的第二列地址)"},
                     "instruction_count": {"type": "integer", "description": "反汇编指令数量,默认 64"},
                     "resolve_functions": {"type": "boolean", "description": "是否解析跳转目标函数名(默认 false,开启需要预加载所有函数,耗时较长)"}
                 },
-                "required": ["method_ptr"]
+                "required": ["il2cpp_method_ptr"]
             }
         ),
         Tool(

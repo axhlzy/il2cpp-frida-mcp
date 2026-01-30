@@ -84,6 +84,7 @@ async def handle_list_methods(args: dict) -> list[TextContent]:
         
         result = "=" * 85 + "\n"
         result += f"Found {len(methods)} Methods in class: {methods[0]['class_name']}\n"
+        result += "第一列: Il2CppMethod 指针 | 第二列: 内存地址 | 第三列: 相对地址(减去基址)\n"
         result += "=" * 85 + "\n"
         
         for m in methods:
@@ -102,14 +103,14 @@ async def handle_show_method(args: dict) -> list[TextContent]:
         if err := _check_connection():
             return [err]
         
-        method_ptr = args.get("method_ptr", "")
-        if not method_ptr:
+        il2cpp_method_ptr = args.get("il2cpp_method_ptr", "")
+        if not il2cpp_method_ptr:
             return [TextContent(type="text", text="[✗] 请指定方法指针")]
         
-        info = state.script.exports_sync.show_method(method_ptr)
+        info = state.script.exports_sync.show_method(il2cpp_method_ptr)
         
         if not info:
-            return [TextContent(type="text", text=f"[✗] 未找到方法: {method_ptr}")]
+            return [TextContent(type="text", text=f"[✗] 未找到方法: {il2cpp_method_ptr}")]
         
         result = f"\n[-]{info['assembly']['name']} @ {info['assembly']['handle']}\n"
         result += f"  [-]{info['image']['name']} @ {info['image']['handle']} | C:{info['image']['class_count']}\n"
@@ -212,11 +213,11 @@ async def handle_show_asm(args: dict) -> list[TextContent]:
         if err := _check_connection():
             return [err]
         
-        method_ptr = args.get("method_ptr", "")
+        il2cpp_method_ptr = args.get("il2cpp_method_ptr", "")
         instruction_count = args.get("instruction_count", 64)
         resolve_functions = args.get("resolve_functions", False)
         
-        if not method_ptr:
+        if not il2cpp_method_ptr:
             return [TextContent(type="text", text="[✗] 请指定方法指针")]
         
         if resolve_functions:
@@ -224,11 +225,11 @@ async def handle_show_asm(args: dict) -> list[TextContent]:
         else:
             result = ""
         
-        asm_result = state.script.exports_sync.show_asm(method_ptr, instruction_count, resolve_functions)
+        asm_result = state.script.exports_sync.show_asm(il2cpp_method_ptr, instruction_count, resolve_functions)
         instructions = asm_result.get('instructions', [])
         
         result += "=" * 85 + "\n"
-        result += f"Disassembly of {method_ptr} ({len(instructions)} instructions)\n"
+        result += f"Disassembly of {il2cpp_method_ptr} ({len(instructions)} instructions)\n"
         if resolve_functions and asm_result.get('methods_preloaded'):
             result += "[*] 函数解析已启用,跳转目标将显示函数名\n"
         result += "=" * 85 + "\n"

@@ -79,16 +79,16 @@ npm run build
 
 ```bash
 # If installed via pip
-il2cpp-mcp                              # Interactive selection
-il2cpp-mcp --stdio                      # stdio mode
-il2cpp-mcp --sse                        # SSE mode
-il2cpp-mcp --http                       # HTTP mode
+il2cpp-frida-mcp                        # Interactive selection
+il2cpp-frida-mcp --stdio                # stdio mode
+il2cpp-frida-mcp --sse                  # SSE mode
+il2cpp-frida-mcp --http                 # HTTP mode
 
 # Or run script directly
 python mcp_server.py --stdio
 
 # Custom host and port
-il2cpp-mcp --sse --host 0.0.0.0 --port 9000
+il2cpp-frida-mcp --sse --host 0.0.0.0 --port 9000
 ```
 
 ### Configure MCP Client
@@ -101,7 +101,7 @@ Add to your MCP configuration file:
 {
   "mcpServers": {
     "il2cpp-frida": {
-      "command": "il2cpp-mcp",
+      "command": "il2cpp-frida-mcp",
       "args": ["--stdio"]
     }
   }

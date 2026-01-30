@@ -80,16 +80,16 @@ npm run build
 
 ```bash
 # 如果通过 pip 安装
-il2cpp-mcp                              # 交互式选择
-il2cpp-mcp --stdio                      # stdio 模式
-il2cpp-mcp --sse                        # SSE 模式
-il2cpp-mcp --http                       # HTTP 模式
+il2cpp-frida-mcp                        # 交互式选择
+il2cpp-frida-mcp --stdio                # stdio 模式
+il2cpp-frida-mcp --sse                  # SSE 模式
+il2cpp-frida-mcp --http                 # HTTP 模式
 
 # 或直接运行脚本
 python mcp_server.py --stdio
 
 # 自定义地址和端口
-il2cpp-mcp --sse --host 0.0.0.0 --port 9000
+il2cpp-frida-mcp --sse --host 0.0.0.0 --port 9000
 ```
 
 ### 配置 MCP 客户端
@@ -100,7 +100,7 @@ il2cpp-mcp --sse --host 0.0.0.0 --port 9000
 {
   "mcpServers": {
     "il2cpp-frida": {
-      "command": "il2cpp-mcp",
+      "command": "il2cpp-frida-mcp",
       "args": ["--stdio"]
     }
   }
