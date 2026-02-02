@@ -21,6 +21,37 @@ from .il2cpp_handlers import (
     handle_exec_js,
     handle_gc_choose,
     handle_gc_info,
+    # 实例解析处理器
+    handle_list_fields,
+    handle_list_fields_with_parents,
+    handle_fields_to_string,
+    handle_get_field_type,
+    handle_get_field_value,
+    handle_get_field_offset,
+    handle_get_instance_type,
+    handle_get_type_parents,
+    handle_list_instance_methods,
+    handle_read_at_offset,
+    handle_set_field_value,
+    # Unity 处理器
+    handle_unity_get_transform,
+    handle_unity_get_gameobject,
+    handle_unity_get_children,
+    handle_unity_get_parent,
+    handle_unity_get_hierarchy,
+    handle_unity_send_message,
+    handle_unity_find_gameobject,
+    handle_unity_get_scene_info,
+    # 内存处理器
+    handle_memory_alloc_cstring,
+    handle_memory_alloc_il2cpp_string,
+    handle_memory_alloc,
+    handle_memory_alloc_vector,
+    handle_memory_scan,
+    handle_memory_write,
+    handle_memory_read,
+    # 应用信息处理器
+    handle_app_get_apk_info,
 )
 
 __all__ = [
@@ -43,4 +74,35 @@ __all__ = [
     "handle_exec_js",
     "handle_gc_choose",
     "handle_gc_info",
+    # 实例解析处理器
+    "handle_list_fields",
+    "handle_list_fields_with_parents",
+    "handle_fields_to_string",
+    "handle_get_field_type",
+    "handle_get_field_value",
+    "handle_get_field_offset",
+    "handle_get_instance_type",
+    "handle_get_type_parents",
+    "handle_list_instance_methods",
+    "handle_read_at_offset",
+    "handle_set_field_value",
+    # Unity 处理器
+    "handle_unity_get_transform",
+    "handle_unity_get_gameobject",
+    "handle_unity_get_children",
+    "handle_unity_get_parent",
+    "handle_unity_get_hierarchy",
+    "handle_unity_send_message",
+    "handle_unity_find_gameobject",
+    "handle_unity_get_scene_info",
+    # 内存处理器
+    "handle_memory_alloc_cstring",
+    "handle_memory_alloc_il2cpp_string",
+    "handle_memory_alloc",
+    "handle_memory_alloc_vector",
+    "handle_memory_scan",
+    "handle_memory_write",
+    "handle_memory_read",
+    # 应用信息处理器
+    "handle_app_get_apk_info",
 ]

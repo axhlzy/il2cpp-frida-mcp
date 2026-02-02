@@ -22,6 +22,37 @@ from .handlers import (
     handle_exec_js,
     handle_gc_choose,
     handle_gc_info,
+    # 实例解析处理器
+    handle_list_fields,
+    handle_list_fields_with_parents,
+    handle_fields_to_string,
+    handle_get_field_type,
+    handle_get_field_value,
+    handle_get_field_offset,
+    handle_get_instance_type,
+    handle_get_type_parents,
+    handle_list_instance_methods,
+    handle_read_at_offset,
+    handle_set_field_value,
+    # Unity 处理器
+    handle_unity_get_transform,
+    handle_unity_get_gameobject,
+    handle_unity_get_children,
+    handle_unity_get_parent,
+    handle_unity_get_hierarchy,
+    handle_unity_send_message,
+    handle_unity_find_gameobject,
+    handle_unity_get_scene_info,
+    # 内存处理器
+    handle_memory_alloc_cstring,
+    handle_memory_alloc_il2cpp_string,
+    handle_memory_alloc,
+    handle_memory_alloc_vector,
+    handle_memory_scan,
+    handle_memory_write,
+    handle_memory_read,
+    # 应用信息处理器
+    handle_app_get_apk_info,
 )
 
 
@@ -30,7 +61,10 @@ server = Server("il2cpp-frida-mcp")
 
 
 # 无参数的工具列表
-NO_ARGS_TOOLS = ["frida_list_devices", "frida_disconnect", "frida_resume", "il2cpp_gc_info"]
+NO_ARGS_TOOLS = [
+    "frida_list_devices", "frida_disconnect", "frida_resume", "il2cpp_gc_info",
+    "app_get_apk_info"
+]
 
 
 # 工具处理器映射
@@ -52,6 +86,37 @@ HANDLERS = {
     "il2cpp_exec_js": handle_exec_js,
     "il2cpp_gc_choose": handle_gc_choose,
     "il2cpp_gc_info": handle_gc_info,
+    # 实例解析处理器
+    "il2cpp_list_fields": handle_list_fields,
+    "il2cpp_list_fields_with_parents": handle_list_fields_with_parents,
+    "il2cpp_fields_to_string": handle_fields_to_string,
+    "il2cpp_get_field_type": handle_get_field_type,
+    "il2cpp_get_field_value": handle_get_field_value,
+    "il2cpp_get_field_offset": handle_get_field_offset,
+    "il2cpp_get_instance_type": handle_get_instance_type,
+    "il2cpp_get_type_parents": handle_get_type_parents,
+    "il2cpp_list_instance_methods": handle_list_instance_methods,
+    "il2cpp_read_at_offset": handle_read_at_offset,
+    "il2cpp_set_field_value": handle_set_field_value,
+    # Unity 处理器
+    "unity_get_transform": handle_unity_get_transform,
+    "unity_get_gameobject": handle_unity_get_gameobject,
+    "unity_get_children": handle_unity_get_children,
+    "unity_get_parent": handle_unity_get_parent,
+    "unity_get_hierarchy": handle_unity_get_hierarchy,
+    "unity_send_message": handle_unity_send_message,
+    "unity_find_gameobject": handle_unity_find_gameobject,
+    "unity_get_scene_info": handle_unity_get_scene_info,
+    # 内存处理器
+    "memory_alloc_cstring": handle_memory_alloc_cstring,
+    "memory_alloc_il2cpp_string": handle_memory_alloc_il2cpp_string,
+    "memory_alloc": handle_memory_alloc,
+    "memory_alloc_vector": handle_memory_alloc_vector,
+    "memory_scan": handle_memory_scan,
+    "memory_write": handle_memory_write,
+    "memory_read": handle_memory_read,
+    # 应用信息处理器
+    "app_get_apk_info": handle_app_get_apk_info,
 }
 
 

@@ -136,7 +136,7 @@ export class MethodService {
             class: {
                 name: method.class.name,
                 handle: method.class.handle.toString(),
-                namespace: method.class.namespace,
+                namespace: method.class.namespace || "[No Namespace]",
                 method_count: method.class.methods.length,
                 field_count: method.class.fields.length
             },

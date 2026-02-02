@@ -1,21 +1,21 @@
 """
-MCP 工具定义
+MCP Tool Definitions
 """
 from mcp.types import Tool
 
 
 def get_tools() -> list[Tool]:
-    """返回所有可用的工具定义"""
+    """Return all available tool definitions"""
     return [
-        # Frida 基础工具
+        # Frida Basic Tools
         Tool(
             name="frida_list_devices",
-            description="列出所有可用的 Frida 设备（一般不需要调用，除非用户明确要求查看设备列表）",
+            description="List all available Frida devices (usually not needed unless user explicitly requests device list)",
             inputSchema={"type": "object", "properties": {}}
         ),
         Tool(
             name="frida_connect",
-            description="连接到 Frida 设备和目标进程。未连接时默认使用 device_type='usb' 和 mode='attach_front' 连接前台应用",
+            description="Connect to Frida device and target process. Default: device_type='usb' and mode='attach_front' to attach foreground app",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -29,27 +29,27 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="frida_disconnect",
-            description="断开 Frida 连接",
+            description="Disconnect from Frida",
             inputSchema={"type": "object", "properties": {}}
         ),
         Tool(
             name="frida_resume",
-            description="恢复被暂停的进程 (spawn 模式后使用)",
+            description="Resume suspended process (use after spawn mode)",
             inputSchema={"type": "object", "properties": {}}
         ),
         Tool(
             name="frida_list_processes",
-            description="列出设备上的进程",
+            description="List processes on device",
             inputSchema={
                 "type": "object",
                 "properties": {"filter": {"type": "string"}}
             }
         ),
         
-        # IL2CPP 工具
+        # IL2CPP Tools
         Tool(
             name="il2cpp_list_images",
-            description="列出所有 IL2CPP 镜像",
+            description="List all IL2CPP images",
             inputSchema={
                 "type": "object",
                 "properties": {"filter": {"type": "string"}}
@@ -57,7 +57,7 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_list_classes",
-            description="列出指定镜像的所有类",
+            description="List all classes in specified image",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -70,7 +70,7 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_list_methods",
-            description="列出指定类的所有方法",
+            description="List all methods of specified class",
             inputSchema={
                 "type": "object",
                 "properties": {"class_name": {"type": "string"}},
@@ -79,16 +79,16 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_show_method",
-            description="显示方法的详细信息。注意: 参数必须是 Il2CppMethod 指针 (即 il2cpp_list_methods 返回结果的第二列地址)",
+            description="Show method details. Note: parameter must be Il2CppMethod pointer (first column handle from il2cpp_list_methods result)",
             inputSchema={
                 "type": "object",
-                "properties": {"il2cpp_method_ptr": {"type": "string", "description": "Il2CppMethod 指针地址(il2cpp_list_methods 返回结果的第一列 handle)"}},
+                "properties": {"il2cpp_method_ptr": {"type": "string", "description": "Il2CppMethod pointer address (first column handle from il2cpp_list_methods)"}},
                 "required": ["il2cpp_method_ptr"]
             }
         ),
         Tool(
             name="il2cpp_find_classes",
-            description="查找类(支持模糊匹配)",
+            description="Find classes (supports fuzzy matching)",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -100,7 +100,7 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_find_methods",
-            description="查找方法(支持模糊匹配)",
+            description="Find methods (supports fuzzy matching)",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -113,20 +113,20 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_show_asm",
-            description="反汇编方法。method_ptr 应使用 virtual_address(list_methods 返回的第二列地址)。resolve_functions 默认为 false,如果设为 true 会解析跳转目标函数名,但需要预加载所有函数,耗时会比较长",
+            description="Disassemble method. method_ptr should use virtual_address (second column from list_methods). resolve_functions defaults to false; if true, resolves jump target function names but requires preloading all functions (takes longer)",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "il2cpp_method_ptr": {"type": "string", "description": "方法的 virtual_address(list_methods 返回的第二列地址)"},
-                    "instruction_count": {"type": "integer", "description": "反汇编指令数量,默认 64"},
-                    "resolve_functions": {"type": "boolean", "description": "是否解析跳转目标函数名(默认 false,开启需要预加载所有函数,耗时较长)"}
+                    "il2cpp_method_ptr": {"type": "string", "description": "Method virtual_address (second column from list_methods)"},
+                    "instruction_count": {"type": "integer", "description": "Number of instructions to disassemble, default 64"},
+                    "resolve_functions": {"type": "boolean", "description": "Whether to resolve jump target function names (default false, enabling requires preloading all functions)"}
                 },
                 "required": ["il2cpp_method_ptr"]
             }
         ),
         Tool(
             name="il2cpp_find_export",
-            description="查找导出函数",
+            description="Find exported functions",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -138,7 +138,7 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_find_import",
-            description="查找导入函数",
+            description="Find imported functions",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -150,7 +150,7 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_exec_js",
-            description="执行任意 JavaScript 代码(高级功能,可以直接操作 Frida API 和 IL2CPP 对象)",
+            description="Execute arbitrary JavaScript code (advanced feature, can directly manipulate Frida API and IL2CPP objects)",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -161,19 +161,342 @@ def get_tools() -> list[Tool]:
         ),
         Tool(
             name="il2cpp_gc_choose",
-            description="在堆中查找指定类的所有实例（用于查找运行时对象）",
+            description="Find all instances of specified class in heap (for finding runtime objects)",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "class_name": {"type": "string", "description": "要查找的类名"},
-                    "max_count": {"type": "integer", "description": "最大返回数量，默认100"}
+                    "class_name": {"type": "string", "description": "Class name to find"},
+                    "max_count": {"type": "integer", "description": "Maximum number of results, default 100"}
                 },
                 "required": ["class_name"]
             }
         ),
         Tool(
             name="il2cpp_gc_info",
-            description="获取 GC 堆信息（堆大小、已用大小等）",
+            description="Get GC heap information (heap size, used size, etc.)",
+            inputSchema={"type": "object", "properties": {}}
+        ),
+        
+        # Instance Parsing Tools (lfs/lfp/lfss etc.)
+        Tool(
+            name="il2cpp_list_fields",
+            description="Parse all fields of instance (lfs). Returns all field info including name, type, offset, value",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "class_handle": {"type": "string", "description": "Optional class handle to specify which class fields to parse"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_list_fields_with_parents",
+            description="Parse all fields of instance including parent classes (lfp). Returns field info for instance and all parent classes",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_fields_to_string",
+            description="Get string representation of instance fields (lfss). Returns JSON format field name-value mapping",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "class_handle": {"type": "string", "description": "Optional class handle"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_get_field_type",
+            description="Get field type information (lft). Returns detailed type info for specified field",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "field_name": {"type": "string", "description": "Field name"},
+                    "class_handle": {"type": "string", "description": "Optional class handle"}
+                },
+                "required": ["instance_ptr", "field_name"]
+            }
+        ),
+        Tool(
+            name="il2cpp_get_field_value",
+            description="Get field value (lfv). Returns value pointer for specified field",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "field_name": {"type": "string", "description": "Field name"},
+                    "class_handle": {"type": "string", "description": "Optional class handle"}
+                },
+                "required": ["instance_ptr", "field_name"]
+            }
+        ),
+        Tool(
+            name="il2cpp_get_field_offset",
+            description="Get field offset (lfo). Returns offset of specified field in instance",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "field_name": {"type": "string", "description": "Field name"},
+                    "class_handle": {"type": "string", "description": "Optional class handle"}
+                },
+                "required": ["instance_ptr", "field_name"]
+            }
+        ),
+        Tool(
+            name="il2cpp_get_instance_type",
+            description="Get instance type information. Returns detailed info about the class the instance belongs to",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_get_type_parents",
+            description="Get instance parent class chain. Returns inheritance chain from current class to root class",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_list_instance_methods",
+            description="List all methods of instance (lms). Returns all methods of the class the instance belongs to",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="il2cpp_read_at_offset",
+            description="Read value at specified offset of instance. Can read memory value at any offset position",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "offset": {"type": "integer", "description": "Offset"},
+                    "size": {"type": "integer", "description": "Read size (1, 2, 4, 8), default 8"}
+                },
+                "required": ["instance_ptr", "offset"]
+            }
+        ),
+        Tool(
+            name="il2cpp_set_field_value",
+            description="Set instance field value. Modify specified field value of instance",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Instance pointer address"},
+                    "field_name": {"type": "string", "description": "Field name"},
+                    "value": {"type": "string", "description": "New value (pointer string)"},
+                    "class_handle": {"type": "string", "description": "Optional class handle"}
+                },
+                "required": ["instance_ptr", "field_name", "value"]
+            }
+        ),
+        
+        # Unity Tools
+        Tool(
+            name="unity_get_transform",
+            description="Get Transform from GameObject or Component",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "GameObject or Component pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="unity_get_gameobject",
+            description="Get GameObject from Transform or Component",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "instance_ptr": {"type": "string", "description": "Transform or Component pointer address"}
+                },
+                "required": ["instance_ptr"]
+            }
+        ),
+        Tool(
+            name="unity_get_children",
+            description="Get all children of Transform",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "transform_ptr": {"type": "string", "description": "Transform pointer address"}
+                },
+                "required": ["transform_ptr"]
+            }
+        ),
+        Tool(
+            name="unity_get_parent",
+            description="Get parent of Transform",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "transform_ptr": {"type": "string", "description": "Transform pointer address"}
+                },
+                "required": ["transform_ptr"]
+            }
+        ),
+        Tool(
+            name="unity_get_hierarchy",
+            description="Get hierarchy path of Transform (from current object to root)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "transform_ptr": {"type": "string", "description": "Transform pointer address"},
+                    "max_depth": {"type": "integer", "description": "Maximum depth, default 10"}
+                },
+                "required": ["transform_ptr"]
+            }
+        ),
+        Tool(
+            name="unity_send_message",
+            description="Call UnitySendMessage to send message to GameObject",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "gameobject_name": {"type": "string", "description": "GameObject name"},
+                    "method_name": {"type": "string", "description": "Method name"},
+                    "message": {"type": "string", "description": "Message content"}
+                },
+                "required": ["gameobject_name", "method_name", "message"]
+            }
+        ),
+        Tool(
+            name="unity_find_gameobject",
+            description="Find GameObject by path (using GameObject.Find)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "GameObject path"}
+                },
+                "required": ["path"]
+            }
+        ),
+        Tool(
+            name="unity_get_scene_info",
+            description="Get current scene information including all GameObjects hierarchy and attached scripts with their pointers",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "max_depth": {"type": "integer", "description": "Maximum hierarchy depth to traverse, default 10"},
+                    "include_inactive": {"type": "boolean", "description": "Whether to include inactive GameObjects, default true"}
+                }
+            }
+        ),
+        
+        # Memory Tools
+        Tool(
+            name="memory_alloc_cstring",
+            description="Allocate C string (UTF-8)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "str": {"type": "string", "description": "String to allocate"}
+                },
+                "required": ["str"]
+            }
+        ),
+        Tool(
+            name="memory_alloc_il2cpp_string",
+            description="Allocate IL2CPP string (System.String)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "str": {"type": "string", "description": "String to allocate"}
+                },
+                "required": ["str"]
+            }
+        ),
+        Tool(
+            name="memory_alloc",
+            description="Allocate memory of specified size",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "size": {"type": "integer", "description": "Memory size in bytes"}
+                },
+                "required": ["size"]
+            }
+        ),
+        Tool(
+            name="memory_alloc_vector",
+            description="Allocate Vector (float array)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "values": {"type": "array", "items": {"type": "number"}, "description": "Float array"}
+                },
+                "required": ["values"]
+            }
+        ),
+        Tool(
+            name="memory_scan",
+            description="Memory scan - unified interface. Uses Memory.scanSync and Process.enumerateRanges for memory scanning",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "pattern": {"type": "string", "description": "Search pattern, format like '13 37 ?? ff' or '/regex/'"},
+                    "protection": {"type": "string", "description": "Memory protection attribute, e.g. 'r--', 'rw-', 'r-x', 'rwx', default 'r--'"},
+                    "module_name": {"type": "string", "description": "Optional, specify module name to search"},
+                    "coalesce": {"type": "boolean", "description": "Whether to coalesce adjacent memory regions, default false"},
+                    "limit": {"type": "integer", "description": "Maximum number of results, default 100"}
+                },
+                "required": ["pattern"]
+            }
+        ),
+        Tool(
+            name="memory_write",
+            description="Write memory value",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "address": {"type": "string", "description": "Memory address"},
+                    "value": {"description": "Value to write"},
+                    "type": {"type": "string", "enum": ["int", "int32", "uint32", "int64", "uint64", "float", "double", "pointer", "string"], "description": "Value type, default int"}
+                },
+                "required": ["address", "value"]
+            }
+        ),
+        Tool(
+            name="memory_read",
+            description="Read memory value",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "address": {"type": "string", "description": "Memory address"},
+                    "type": {"type": "string", "enum": ["int", "int32", "uint32", "int64", "uint64", "float", "double", "pointer", "string", "bytes"], "description": "Value type, default pointer"},
+                    "length": {"type": "integer", "description": "Length (for string and bytes types)"}
+                },
+                "required": ["address"]
+            }
+        ),
+        
+        # App Info Tools
+        Tool(
+            name="app_get_apk_info",
+            description="Get APK basic information (package name, version, signature, etc.)",
             inputSchema={"type": "object", "properties": {}}
         )
     ]
