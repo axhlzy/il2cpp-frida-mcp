@@ -189,7 +189,7 @@ npm run watch     # Watch mode
 ## Acknowledgements
 
 - [frida-il2cpp-bridge](https://github.com/vfsfitvnm/frida-il2cpp-bridge) - IL2CPP runtime bridge
-- [Il2CppHookScripts](https://github.com/AeonLucid/Il2CppHookScripts) - Reference implementation
+- [Il2CppHookScripts](https://github.com/axhlzy/Il2CppHookScripts) - Reference implementation
 
 ## License
 
